@@ -71,7 +71,7 @@ fun BerandaScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(Icons.Filled.SettingsEthernet, null, tint = Primary)
+                        Icon(Icons.Filled.LeakAdd, null, tint = Primary)
                         Text("Relay", fontWeight = FontWeight.Black, fontSize = 20.sp, color = Primary)
                     }
                     Row(
@@ -308,7 +308,7 @@ fun WelcomeModal(onDismiss: () -> Unit) {
                     modifier = Modifier.size(64.dp).background(Primary.copy(alpha = 0.15f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(Icons.Filled.SettingsEthernet, null, tint = Primary, modifier = Modifier.size(32.dp))
+                    Icon(Icons.Filled.LeakAdd, null, tint = Primary, modifier = Modifier.size(32.dp))
                 }
                 Spacer(Modifier.height(16.dp))
                 Text("Welcome to Relay", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Primary,

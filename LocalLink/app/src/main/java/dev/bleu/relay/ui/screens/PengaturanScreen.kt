@@ -47,7 +47,7 @@ fun PengaturanScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Icon(Icons.Filled.SettingsEthernet, contentDescription = null, tint = Primary)
+                        Icon(Icons.Filled.LeakAdd, contentDescription = null, tint = Primary)
                         Text("Relay", fontWeight = FontWeight.Black, fontSize = 20.sp, color = Primary)
                     }
                     Box(
