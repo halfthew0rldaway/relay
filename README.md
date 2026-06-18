@@ -1,20 +1,22 @@
 # Relay
 
-Relay adalah aplikasi transfer file lokal (Local Area Network) peer-to-peer (P2P) yang dirancang untuk kecepatan, keamanan, dan kemudahan tanpa memerlukan koneksi internet aktif. Proyek ini terdiri dari dua komponen utama: aplikasi Desktop (berbasis Web/Electron) dan aplikasi Mobile (Android).
+Relay adalah aplikasi transfer file lokal (Local Area Network) peer-to-peer (P2P) yang dirancang untuk kecepatan, keamanan, dan kemudahan tanpa memerlukan koneksi internet aktif. Proyek ini terdiri dari dua komponen utama: aplikasi Web dan aplikasi Mobile (Android).
+
+![Relay Web](screenshot.png)
 
 ## Deskripsi Sistem
 
 Relay memungkinkan pengguna untuk mengirim dan menerima file secara langsung antar perangkat dalam satu jaringan lokal yang sama (Wi-Fi atau Ethernet) dengan menggunakan arsitektur zero-copy dan zero-internet. 
 
 ### Versi Mobile (Android)
-Aplikasi mobile Relay berfungsi sebagai simpul utama (node) dalam mobilitas sehari-hari. Aplikasi ini dibangun dengan standar Android modern, difokuskan pada efisiensi baterai dan kecepatan transfer. Fitur utamanya mencakup:
+Aplikasi mobile Relay berfungsi sebagai simpul utama (node) dalam mobilitas sehari-hari. Aplikasi ini dibangun dengan standar Android modern, difokuskan pada efisiensi baterai dan kecepatan transfer. Tentu saja, aplikasi ini berjalan secara stabil dan kompatibel pada seluruh perangkat Android masa kini. Fitur utamanya mencakup:
 *   **Pemindaian Jaringan Otomatis:** Menemukan perangkat lain di jaringan lokal menggunakan mDNS (Multicast DNS) dan Network Service Discovery (NSD).
 *   **Transfer Latar Belakang:** Mampu menerima dan mengirim file sambil tetap menjaga stabilitas aplikasi meskipun pengguna sedang membuka aplikasi lain.
 *   **Manajemen File Terintegrasi:** Mengelola file yang diunduh langsung di dalam aplikasi dengan antarmuka yang bersih dan responsif.
 *   **Keamanan Terdesentralisasi:** Setiap transfer harus melalui persetujuan manual (Accept/Reject) kecuali jika fitur Auto-accept diaktifkan untuk perangkat yang dipercayai.
 
-### Versi Web/Desktop
-Versi Web/Desktop dari Relay dibungkus menggunakan Electron untuk memberikan pengalaman native pada komputer.
+### Versi Web
+Versi Web dari Relay memberikan fleksibilitas tertinggi karena dapat diakses secara langsung melalui peramban (browser). Ini memastikan aplikasi berfungsi secara sempurna melintasi semua jenis perangkat dan sistem operasi yang memungkinkan (Windows, macOS, Linux, iOS, ChromeOS, dll.) tanpa perlu proses instalasi yang berbelit-belit.
 *   **Drag-and-Drop Staging:** Pengguna dapat menarik dan menaruh file ke dalam antarmuka untuk persiapan pengiriman (staging).
 *   **Pin Perangkat:** Memungkinkan pengguna menyematkan satu perangkat spesifik untuk pengiriman cepat (Quick Send).
 *   **Riwayat Transfer:** Mencatat semua log pengiriman dan penerimaan file secara komprehensif.
@@ -25,7 +27,7 @@ Relay menggunakan arsitektur Klien-Server hibrida pada setiap instansinya. Setia
 
 ### Tech Stack
 *   **Mobile (Android):** Kotlin, Jetpack Compose, Ktor Server (CIO), Room (Database Lokal), Coil (Image Loading).
-*   **Desktop/Web:** Node.js, Express, Bonjour-service (mDNS), Electron, Vanilla HTML/CSS/JS.
+*   **Web:** Node.js, Express, Bonjour-service (mDNS), Vanilla HTML/CSS/JS.
 
 ## Diagram Alir (Flowchart)
 
@@ -79,10 +81,10 @@ cd LocalLink
 ```
 APK akan diproduksi dan tersedia di repositori ini dengan nama `Relay.apk`.
 
-### Build Desktop (Linux)
-Aplikasi Desktop dapat dikompilasi menggunakan Electron Builder:
+### Build Web
+Aplikasi Web dapat dijalankan langsung:
 ```bash
 cd LocalLinkWeb
 npm install
-npm run build:linux
+npm start
 ```
