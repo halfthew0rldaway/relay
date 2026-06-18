@@ -1,0 +1,30 @@
+# === Node.js / Electron ===
+node_modules/
+dist/
+*.tgz
+
+# === Android build artifacts ===
+LocalLink/app/build/
+LocalLink/build/
+LocalLink/.gradle/
+LocalLink/local.properties
+LocalLink/app/build/outputs/apk/
+
+# === IDE ===
+.vscode/
+.idea/
+*.iml
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Runtime data ===
+*.log
+
+# === Analysis docs (generated, not source) ===
+ANALYSIS.md
+KEEP.md
+IMPROVE.md
+REMOVE.md
+REFACTORING_PLAN.md

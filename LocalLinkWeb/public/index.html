@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relay — Desktop</title>
+    <link rel="icon" href="favicon.ico" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="modal-backdrop">
+        <div class="welcome-card">
+            <div class="welcome-top">
+                <div class="app-icon-lg"><span class="material-icons-round">leak_add</span></div>
+                <span class="version-chip">v2.0 DESKTOP</span>
+            </div>
+            <h1 class="welcome-title">Relay<br><span class="accent">Desktop</span></h1>
+            <p class="welcome-sub">Zero-copy. Zero-internet. File transfers over LAN.</p>
+            <div class="feature-rows">
+                <div class="feature-row">
+                    <span class="material-icons-round ficon">push_pin</span>
+                    <span>Tap the <strong>pin icon</strong> on any device card to set it as your send target</span>
+                </div>
+                <div class="feature-row">
+                    <span class="material-icons-round ficon">swap_horiz</span>
+                    <span>Discover devices on your <strong>local network</strong> and transfer instantly</span>
+                </div>
+                <div class="feature-row">
+                    <span class="material-icons-round ficon">folder_open</span>
+                    <span>Go to <strong>Files</strong> to stage local files and send them to any device</span>
+                </div>
+            </div>
+            <button id="btn-start" class="btn-primary full mt-1">
+                Start Tunnel <span class="material-icons-round btn-arrow">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Shell -->
+    <div id="app-shell">
+
+        <!-- Header -->
+        <header id="main-header">
+            <div class="logo">
+                <span class="material-icons-round">leak_add</span>
+                Relay
+            </div>
+            <div class="header-end">
+                <div id="pinned-chip" class="pinned-chip hidden">
+                    <span class="material-icons-round" style="font-size:.85rem;flex-shrink:0">push_pin</span>
+                    <span id="pinned-chip-name" class="chip-name"></span>
+                    <button id="btn-chip-unpin" class="unpin-btn" title="Unpin">
+                        <span class="material-icons-round">close</span>
+                    </button>
+                </div>
+                <span id="host-badge" class="badge">DESKTOP</span>
+            </div>
+        </header>
+
+        <!-- Transfer Status Card -->
+        <section id="transfer-status-card" class="transfer-status-card">
+            <div class="status-copy">
+                <div class="status-kicker-row">
+                    <span id="status-kicker" class="status-kicker">SYSTEM READY</span>
+                    <span id="status-badge" class="status-badge idle">Idle</span>
+                </div>
+                <h2 id="status-title">Ready to transfer</h2>
+                <p id="status-detail">Pick a nearby device, stage a file, or wait for an incoming transfer.</p>
+                <div id="status-meta" class="status-meta">
+                    <span id="status-peer" class="status-pill hidden"></span>
+                    <span id="status-file" class="status-pill hidden"></span>
+                    <span id="status-size" class="status-pill hidden"></span>
+                </div>
+            </div>
+            <div class="status-progress-wrap">
+                <div class="status-progress-head">
+                    <span id="status-phase-label">Standing by</span>
+                    <span id="status-progress-label">0%</span>
+                </div>
+                <div class="status-progress-track">
+                    <div id="status-progress-fill" class="status-progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="page">
+
+            <!-- Transfer Tab -->
+            <div class="tab active" id="tab-transfer">
+                <div class="tab-header">
+                    <p class="section-label">NEARBY NODES</p>
+                    <h1>Transfer</h1>
+                    <div class="scan-row">
+                        <span class="scan-dot"></span>
+                        <span id="scan-text" class="mono text-muted">Scanning...</span>
+                    </div>
+                </div>
+                <div id="empty-state" class="empty-state">
+                    <span class="material-icons-round empty-icon">wifi_off</span>
+                    <p>No devices on your network</p>
+                    <small>Both devices need Relay on the same Wi-Fi</small>
+                </div>
+                <div id="device-list" class="device-list"></div>
+            </div>
+
+            <!-- Files Tab -->
+            <div class="tab hidden" id="tab-files">
+                <div class="tab-header">
+                    <p class="section-label">FILE MANAGER</p>
+                    <h1>Files</h1>
+                </div>
+                <div class="files-hero">
+                    <div>
+                        <p class="files-hero-label">Current Flow</p>
+                        <h3 id="files-hero-title">Stage a file, then send with confidence</h3>
+                        <p id="files-hero-sub">You'll see every step here: staged, contacting receiver, sending,
+                            downloading, and finished.</p>
+                    </div>
+                </div>
+
+                <div id="drop-zone" class="drop-zone">
+                    <span class="material-icons-round" style="font-size:2.5rem;color:var(--muted)">upload_file</span>
+                    <p>Drop a file or <label for="file-input" class="link">browse</label></p>
+                    <small>Stage, then send it to your pinned device</small>
+                </div>
+                <input type="file" id="file-input" style="display:none">
+
+                <div id="staged-card" class="staged-card hidden">
+                    <div id="staged-preview" class="staged-preview"></div>
+                    <div class="staged-meta">
+                        <div id="staged-name" class="staged-name"></div>
+                        <div id="staged-size" class="staged-size mono"></div>
+                        <div class="staged-btns">
+                            <button id="btn-quick-send" class="btn-success sm hidden">
+                                <span class="material-icons-round">send</span> Send to Pinned
+                            </button>
+                            <button id="btn-clear-stage" class="btn-ghost sm">
+                                <span class="material-icons-round">close</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab hidden" id="tab-history">
+                <div class="tab-header">
+                    <h1>History</h1>
+                    <div class="segmented">
+                        <button class="seg-btn active" data-filter="all">All</button>
+                        <button class="seg-btn" data-filter="sent">Sent</button>
+                        <button class="seg-btn" data-filter="received">Received</button>
+                    </div>
+                </div>
+                <div id="history-list"></div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab hidden" id="tab-settings">
+                <div class="tab-header">
+                    <p class="section-label">SYSTEM CONFIGURATION</p>
+                    <h1>Settings</h1>
+                    <div style="width:48px;height:4px;border-radius:999px;background:var(--primary);margin-top:.5rem">
+                    </div>
+                </div>
+                <div class="settings-section">
+
+                    <div class="setting-card">
+                        <span class="setting-card-tag">DEVICE IDENTITY</span>
+                        <span class="setting-card-title" id="settings-device-name">—</span>
+                        <span class="setting-card-sub">Visible to other nodes on the local network</span>
+                        <label class="field-label" style="margin-top:.5rem">Change Name</label>
+                        <input id="setting-name" type="text" class="field-input">
+                    </div>
+
+                    <div class="setting-card">
+                        <span class="setting-card-tag">STORAGE PATH</span>
+                        <span class="setting-card-sub">Files received will be saved here</span>
+                        <input id="setting-path" type="text" class="field-input">
+                    </div>
+
+                    <div class="setting-toggle">
+                        <div class="setting-toggle-text">
+                            <span class="setting-card-tag">NETWORK LOGIC</span>
+                            <p class="setting-toggle-label">Auto-accept trusted</p>
+                            <p class="setting-toggle-desc">Bypass confirmation for devices in your verified list.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-auto">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <button id="btn-save-settings" class="btn-primary full">Save Settings</button>
+
+                    <div class="settings-about">
+                        <span class="material-icons-round">settings_ethernet</span>
+                        <p class="about-name">Relay v2.0</p>
+                        <p class="about-sub mono">Zero-Copy Local Architecture — Desktop Build</p>
+                    </div>
+
+                    <p class="settings-footer">RELAY • END-TO-END ENCRYPTED</p>
+                </div>
+            </div>
+
+        </div><!-- /page -->
+
+        <!-- Bottom nav -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="tab-transfer">
+                <span class="material-icons-round">wifi</span>
+                Transfer
+            </button>
+            <button class="nav-btn" data-tab="tab-files">
+                <span class="material-icons-round">folder_open</span>
+                Files
+            </button>
+            <button class="nav-btn" data-tab="tab-history">
+                <span class="material-icons-round">history</span>
+                History
+            </button>
+            <button class="nav-btn" data-tab="tab-settings">
+                <span class="material-icons-round">settings</span>
+                Settings
+            </button>
+        </nav>
+    </div><!-- /app-shell -->
+
+    <!-- Receive Modal -->
+    <div id="receive-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <div class="modal-icon-wrap"><span class="material-icons-round">download</span></div>
+            <h2>Incoming Transfer</h2>
+            <p id="receive-info" class="text-muted small"></p>
+            <div id="receive-summary" class="receive-summary"></div>
+            <div id="receive-progress" class="receive-progress hidden">
+                <div class="receive-progress-head">
+                    <span id="receive-progress-phase">Waiting</span>
+                    <span id="receive-progress-percent">0%</span>
+                </div>
+                <div class="receive-progress-track">
+                    <div id="receive-progress-fill" class="receive-progress-fill"></div>
+                </div>
+                <p id="receive-progress-detail" class="receive-progress-detail">Preparing transfer…</p>
+            </div>
+            <button id="btn-accept" class="btn-primary full">Accept & Download</button>
+            <button id="btn-reject" class="btn-danger full">Reject</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+</body>
+
+</html>
