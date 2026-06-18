@@ -1,7 +1,7 @@
 /**
- * storage.js — Lightweight JSON file persistence for LocalLink Desktop.
+ * storage.js — Lightweight JSON file persistence for Relay.
  *
- * Data directory: ~/.cache/locallink/
+ * Data directory: ~/.cache/relay/
  * Stores: history, settings, pinned devices as JSON files.
  * All operations are synchronous (small files, local disk).
  */
@@ -10,7 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 
-const DATA_DIR = path.join(os.homedir(), '.cache', 'locallink');
+const DATA_DIR = path.join(os.homedir(), '.cache', 'relay');
 
 function ensureDir() {
     if (!fs.existsSync(DATA_DIR)) {
@@ -61,8 +61,8 @@ export function saveHistoryEntry(entry) {
 
 const SETTINGS_FILE = 'settings.json';
 const DEFAULT_SETTINGS = {
-    deviceName: `LocalLink-${os.hostname().split('.')[0] || 'PC'} Desktop`,
-    downloadPath: path.join(os.homedir(), 'Downloads', 'LocalLink'),
+    deviceName: `Relay-${os.hostname().split('.')[0] || 'PC'} Desktop`,
+    downloadPath: path.join(os.homedir(), 'Downloads', 'Relay'),
     autoAccept: false
 };
 

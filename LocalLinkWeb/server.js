@@ -1,5 +1,5 @@
 /**
- * server.js — LocalLink Desktop transfer server.
+ * server.js — Relay transfer server.
  *
  * Responsibilities:
  *   1. Express HTTP server for file transfer protocol
@@ -121,7 +121,7 @@ let discoveryScanTimer = null;
 let transferHistory = loadHistory();
 let pinnedDevices = loadPinned();
 
-const HOSTNAME = `LocalLink-${appSettings.deviceName.split(' ').slice(1).join(' ') || 'PC'} Desktop`;
+const HOSTNAME = `Relay-${appSettings.deviceName.split(' ').slice(1).join(' ') || 'PC'} Desktop`;
 
 const transferState = {
     phase: 'idle', direction: null,
@@ -194,7 +194,7 @@ function serviceToDevice(service) {
 
 function buildHealthPayload() {
     return {
-        ok: true, service: 'locallink', platform: 'desktop',
+        ok: true, service: 'relay', platform: 'desktop',
         port: PORT, deviceName: appSettings.deviceName,
         ipAddress: getLanIp(),
         bonjourAvailable: bonjourState.available,
@@ -224,7 +224,7 @@ async function probeHealth(ip, ownIps) {
     if (!ip || ownIps.has(ip)) return null;
     const health = await fetchJsonWithTimeout(`http://${ip}:${PORT}/health`);
     if (!health?.ok) return null;
-    if (health.service && health.service !== 'locallink') return null;
+    if (health.service && health.service !== 'relay') return null;
     const deviceName = String(health.deviceName || health.name || '').trim();
     if (!deviceName || deviceName === appSettings.deviceName) return null;
     return { id: ip, name: deviceName, ipAddress: ip, port: Number(health.port) || PORT, type: inferDeviceType(deviceName, health.platform) };
@@ -276,7 +276,7 @@ function publishPresence() {
     try {
         publishedService?.stop(() => { });
         publishedService = bonjour.publish({
-            name: appSettings.deviceName, type: 'locallink',
+            name: appSettings.deviceName, type: 'relay',
             port: PORT, txt: { ip: getLanIp() }
         });
         publishedService.on('error', e => handleMdnsError(e, 'mDNS publish'));
@@ -287,7 +287,7 @@ function startDiscovery() {
     if (!bonjourState.available) return;
     try {
         discoveryBrowser?.stop();
-        discoveryBrowser = bonjour.find({ type: 'locallink' });
+        discoveryBrowser = bonjour.find({ type: 'relay' });
         discoveryBrowser.on('up', service => {
             const dev = serviceToDevice(service);
             if (!dev) return;
@@ -315,7 +315,7 @@ function shutdownBonjour() {
 /* ── Express Application ── */
 
 const app = express();
-const upload = multer({ dest: path.join(os.tmpdir(), 'locallink-tmp') });
+const upload = multer({ dest: path.join(os.tmpdir(), 'relay-tmp') });
 
 const downloadsDir = appSettings.downloadPath;
 if (!fs.existsSync(downloadsDir)) fs.mkdirSync(downloadsDir, { recursive: true });
@@ -697,7 +697,7 @@ bonjour.server.mdns.on('error', e => handleMdnsError(e, 'mDNS socket'));
 bonjour.server.mdns.on('warning', w => console.warn('[mDNS warning]', w?.message || w));
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`LocalLink Desktop running at http://localhost:${PORT}`);
+    console.log(`Relay running at http://localhost:${PORT}`);
     console.log(`[mDNS] Advertising on LAN IP: ${getLanIp()}`);
     publishPresence();
     startDiscovery();
@@ -706,7 +706,7 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 
 server.on('error', e => {
     if (e.code === 'EADDRINUSE') {
-        console.log(`Port ${PORT} already in use. LocalLink may already be running.`);
+        console.log(`Port ${PORT} already in use. Relay may already be running.`);
     } else { console.error(e); }
 });
 

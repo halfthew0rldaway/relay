@@ -1,5 +1,5 @@
 /**
- * app.js — LocalLink Desktop frontend.
+ * app.js — Relay Web frontend.
  *
  * Handles:
  *   - Device discovery display

@@ -1,5 +1,5 @@
 /**
- * validation.js — Input validation for LocalLink Desktop server.
+ * validation.js — Input validation for Relay server.
  *
  * Protects against malformed requests, path traversal,
  * oversized payloads, and invalid transfer metadata.

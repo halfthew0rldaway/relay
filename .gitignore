@@ -7,6 +7,7 @@ dist/
 LocalLink/app/build/
 LocalLink/build/
 LocalLink/.gradle/
+LocalLink/.kotlin/
 LocalLink/local.properties
 LocalLink/app/build/outputs/apk/
 

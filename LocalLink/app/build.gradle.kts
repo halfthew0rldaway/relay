@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.bleu.locallink"
+    namespace = "dev.bleu.relay"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.bleu.locallink"
+        applicationId = "dev.bleu.relay"
         minSdk = 26
         targetSdk = 34
         versionCode = 2

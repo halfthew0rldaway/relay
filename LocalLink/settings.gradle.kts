@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "LocalLink"
+rootProject.name = "Relay"
 include(":app")
