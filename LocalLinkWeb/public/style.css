@@ -83,18 +83,9 @@ body {
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
-    max-width: 850px;
     margin: 0 auto;
     padding-bottom: 6rem;
     background: var(--bg);
-}
-
-@media (min-width: 851px) {
-    #app-shell {
-        box-shadow: 0 0 32px rgba(0, 0, 0, 0.04);
-        border-left: 1px solid var(--outline-dim);
-        border-right: 1px solid var(--outline-dim);
-    }
 }
 
 /* ============ Header ============ */
@@ -102,7 +93,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    padding: 1rem 2.5rem;
     background: var(--surface);
     position: sticky;
     top: 0;
@@ -197,7 +188,7 @@ body {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1.25rem;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 2.5rem;
     background: var(--surface);
     border-bottom: 1px solid var(--outline-dim);
 }
@@ -331,7 +322,7 @@ body {
 /* ============ Tab Content ============ */
 .tab {
     width: 100%;
-    padding: 1.5rem 1.5rem 2rem;
+    padding: 1.5rem 2.5rem 2rem;
 }
 
 .tab-header {
@@ -411,8 +402,8 @@ h1 {
 
 /* ============ Device List ============ */
 .device-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 0.5rem;
 }
 
@@ -763,7 +754,7 @@ button:active {
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: min(calc(100% - 2rem), 520px);
+    width: min(calc(100% - 2rem), 560px);
     display: flex;
     gap: 0.5rem;
     background: var(--surface);
@@ -1360,6 +1351,10 @@ button:active {
 
     .bottom-nav {
         width: calc(100% - 1.5rem);
+    }
+
+    .device-list {
+        grid-template-columns: 1fr;
     }
 }
 
