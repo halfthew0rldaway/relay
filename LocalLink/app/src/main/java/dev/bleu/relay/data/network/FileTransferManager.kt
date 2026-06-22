@@ -55,7 +55,9 @@ class FileTransferManager(
         if (server != null) return
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                server = embeddedServer(CIO, port = TRANSFER_PORT) {
+                server = embeddedServer(CIO, port = TRANSFER_PORT, configure = {
+                    connectionIdleTimeoutSeconds = 3600
+                }) {
                     install(PartialContent)
                     routing {
                         get("/health") {
@@ -136,13 +138,13 @@ class FileTransferManager(
                                             }
                                         }
                                     } catch (e: Exception) {
-                                        _progress.value = _progress.value.copy(isFailed = true)
+                                        _progress.value = _progress.value.copy(isFailed = true, errorMessage = e.localizedMessage ?: "Unknown stream error")
                                         TransferService.stop(this@FileTransferManager.context)
                                         throw e
                                     }
                                 }
                             } catch (e: Exception) {
-                                _progress.value = _progress.value.copy(isFailed = true)
+                                _progress.value = _progress.value.copy(isFailed = true, errorMessage = e.localizedMessage ?: "Connection error")
                                 TransferService.stop(this@FileTransferManager.context)
                             }
                         }
@@ -191,7 +193,7 @@ class FileTransferManager(
             conn.disconnect()
             code == 200
         } catch (e: Exception) {
-            _progress.value = _progress.value.copy(isFailed = true)
+            _progress.value = _progress.value.copy(isFailed = true, errorMessage = e.localizedMessage ?: "Handshake failed")
             false
         }
     }
@@ -217,6 +219,8 @@ class FileTransferManager(
             val url = URL("http://$sourceIp:$sourcePort/file/$fileIndex")
             val conn = url.openConnection() as HttpURLConnection
             conn.requestMethod = "GET"
+            conn.connectTimeout = 15000 // 15 seconds to establish connection
+            conn.readTimeout = 0 // Infinite read timeout for large files
             val inputStream: InputStream = conn.inputStream
             val out: OutputStream = when (destUri.scheme) {
                 "file" -> FileOutputStream(destUri.path ?: return@withContext)
@@ -251,7 +255,7 @@ class FileTransferManager(
             _progress.value = _progress.value.copy(isDone = true)
             TransferService.updateProgress(context, fileName, 100, true)
         } catch (e: Exception) {
-            _progress.value = _progress.value.copy(isFailed = true)
+            _progress.value = _progress.value.copy(isFailed = true, errorMessage = e.localizedMessage ?: "Failed to receive file")
             TransferService.stop(context)
         }
     }

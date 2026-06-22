@@ -73,6 +73,13 @@ body {
     display: none !important;
 }
 
+/* Modal-specific hidden: override generic .hidden for fade-out transitions */
+.modal-backdrop.modal-hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
 .accent {
     color: var(--primary);
 }
@@ -186,8 +193,9 @@ body {
 /* ============ Transfer Status Card ============ */
 .transfer-status-card {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1.25rem;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
     padding: 1.25rem 2.5rem;
     background: var(--surface);
     border-bottom: 1px solid var(--outline-dim);
@@ -830,17 +838,12 @@ button:active {
     background: rgba(28, 27, 31, 0.45);
     backdrop-filter: blur(8px);
     display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 100;
     transition: opacity 0.3s;
     padding: 1rem;
+    overflow-y: auto;
 }
 
-.modal-backdrop.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
 
 .welcome-card {
     background: var(--surface);
@@ -853,6 +856,21 @@ button:active {
     gap: 1.15rem;
     box-shadow: var(--sh-lg);
     border: 1px solid var(--outline-dim);
+    margin: auto;
+}
+
+.welcome-lottie-wrap {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.welcome-lottie-wrap lottie-player {
+    width: 100%;
+    height: 100%;
 }
 
 .welcome-top {
@@ -938,6 +956,7 @@ button:active {
     text-align: center;
     box-shadow: var(--sh-lg);
     border: 1px solid var(--outline-dim);
+    margin: auto;
 }
 
 .modal-card h2 {

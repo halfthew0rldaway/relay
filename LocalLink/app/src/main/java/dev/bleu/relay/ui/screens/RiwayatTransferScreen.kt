@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import dev.bleu.relay.data.db.TransferDirection
 import dev.bleu.relay.data.db.TransferRecord
 import dev.bleu.relay.data.db.TransferStatus
+import dev.bleu.relay.ui.components.AnimatedEmptyState
 import dev.bleu.relay.ui.components.BottomNavigationBar
 import dev.bleu.relay.ui.components.NavTab
 import dev.bleu.relay.ui.theme.*
@@ -138,16 +139,10 @@ fun RiwayatTransferScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(SurfaceContainerLow)
-                            .padding(40.dp),
+                            .padding(top = 40.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            "No transfer records yet.",
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                        )
+                        AnimatedEmptyState(message = "No transfer records yet.")
                     }
                 }
             } else {

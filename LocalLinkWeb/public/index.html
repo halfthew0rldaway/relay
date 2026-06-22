@@ -11,17 +11,21 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="lottie-player.js"></script>
     <script src="app.js" defer></script>
 </head>
 
 <body>
 
     <!-- Welcome Modal -->
-    <div id="welcome-modal" class="modal-backdrop">
+    <div id="welcome-modal" class="modal-backdrop hidden">
         <div class="welcome-card">
-            <div class="welcome-top">
-                <div class="app-icon-lg"><span class="material-icons-round">leak_add</span></div>
-                <span class="version-chip">v2.0 WEB</span>
+            <div class="welcome-top" style="flex-direction: column; align-items: center; gap: 1rem;">
+                <div id="welcome-lottie-wrap" class="welcome-lottie-wrap">
+                    <lottie-player id="welcome-lottie" src="lottie_welcome.json" background="transparent" speed="1" loop
+                        autoplay></lottie-player>
+                </div>
+                <span class="version-chip" style="position: static;">v2.0 WEB</span>
             </div>
             <h1 class="welcome-title">Relay<br><span class="accent">Web</span></h1>
             <p class="welcome-sub">Zero-copy. Zero-internet. File transfers over LAN.</p>
@@ -68,6 +72,11 @@
 
         <!-- Transfer Status Card -->
         <section id="transfer-status-card" class="transfer-status-card">
+            <div id="status-lottie-wrap"
+                style="display: flex; justify-content: center; align-items: center; width: 70px; height: 70px; transition: all 0.3s ease;">
+                <lottie-player id="status-lottie" src="" background="transparent" speed="1"
+                    style="width: 100%; height: 100%;" loop autoplay></lottie-player>
+            </div>
             <div class="status-copy">
                 <div class="status-kicker-row">
                     <span id="status-kicker" class="status-kicker">SYSTEM READY</span>
@@ -234,7 +243,8 @@
     <!-- Receive Modal -->
     <div id="receive-modal" class="modal-backdrop hidden">
         <div class="modal-card">
-            <div class="modal-icon-wrap"><span class="material-icons-round">download</span></div>
+            <lottie-player id="receive-lottie" src="lottie_transfer.json" background="transparent" speed="1"
+                style="width: 100px; height: 100px; margin: 0 auto;" loop autoplay></lottie-player>
             <h2>Incoming Transfer</h2>
             <p id="receive-info" class="text-muted small"></p>
             <div id="receive-summary" class="receive-summary"></div>

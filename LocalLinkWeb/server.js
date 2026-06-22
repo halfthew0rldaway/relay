@@ -704,6 +704,10 @@ const server = app.listen(PORT, '0.0.0.0', () => {
     startFallbackScanning();
 });
 
+// Disable timeout for large file transfers
+server.timeout = 0;
+server.keepAliveTimeout = 0;
+
 server.on('error', e => {
     if (e.code === 'EADDRINUSE') {
         console.log(`Port ${PORT} already in use. Relay may already be running.`);

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.bleu.relay.data.model.PendingFile
+import dev.bleu.relay.ui.components.AnimatedEmptyState
 import dev.bleu.relay.ui.components.BottomNavigationBar
 import dev.bleu.relay.ui.components.NavTab
 import dev.bleu.relay.ui.theme.*
@@ -132,15 +133,10 @@ fun PilihFileScreen(
                 Box(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(SurfaceContainerLow),
+                        .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Icon(Icons.Filled.FolderOpen, contentDescription = null, tint = Outline, modifier = Modifier.size(40.dp))
-                        Text("No files selected", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
-                    }
+                    AnimatedEmptyState(message = "No files selected")
                 }
             } else {
                 LazyColumn(

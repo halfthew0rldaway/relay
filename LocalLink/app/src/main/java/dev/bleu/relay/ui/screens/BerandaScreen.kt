@@ -27,6 +27,7 @@ import dev.bleu.relay.data.model.DiscoveredDevice
 import dev.bleu.relay.data.model.DeviceType
 import dev.bleu.relay.ui.components.BottomNavigationBar
 import dev.bleu.relay.ui.components.NavTab
+import dev.bleu.relay.ui.components.LottieStateAnimation
 import dev.bleu.relay.ui.theme.*
 import dev.bleu.relay.viewmodel.MainViewModel
 
@@ -305,10 +306,21 @@ fun WelcomeModal(onDismiss: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
-                    modifier = Modifier.size(64.dp).background(Primary.copy(alpha = 0.15f), CircleShape),
+                    modifier = Modifier.size(100.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(Icons.Filled.LeakAdd, null, tint = Primary, modifier = Modifier.size(32.dp))
+                    LottieStateAnimation(
+                        modifier = Modifier.fillMaxSize(),
+                        rawRes = dev.bleu.relay.R.raw.lottie_welcome, // Offline welcome animation
+                        fallback = {
+                            Box(
+                                modifier = Modifier.size(64.dp).background(Primary.copy(alpha = 0.15f), CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(Icons.Filled.LeakAdd, null, tint = Primary, modifier = Modifier.size(32.dp))
+                            }
+                        }
+                    )
                 }
                 Spacer(Modifier.height(16.dp))
                 Text("Welcome to Relay", fontSize = 22.sp, fontWeight = FontWeight.Black, color = Primary,

@@ -39,11 +39,40 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Welcome Modal ── */
 
     const welcomeEl = q('#welcome-modal');
-    if (localStorage.getItem('ll_welcomed')) welcomeEl.classList.add('hidden');
+    
+    // Global Lottie Error Handler: removes broken animations from the DOM flow to prevent blank gaps
+    window.lottiesBroken = false;
+    document.querySelectorAll('lottie-player').forEach(player => {
+        const wrap = player.parentElement && player.parentElement.id.includes('wrap') ? player.parentElement : player;
+        
+        const collapse = () => {
+            window.lottiesBroken = true;
+            wrap.classList.add('hidden');
+            wrap.style.display = 'none'; // Overrides any inline dimensions and flex gaps
+        };
+
+        player.addEventListener('error', collapse);
+        
+        let loaded = false;
+        player.addEventListener('ready', () => { loaded = true; });
+        player.addEventListener('load', () => { loaded = true; });
+        
+        // If animation fails to start within 1.5s, assume broken and collapse naturally
+        setTimeout(() => {
+            if (!loaded) collapse();
+        }, 1500);
+    });
+
+    welcomeEl.classList.remove('hidden');
+    
     q('#btn-start').onclick = () => {
-        localStorage.setItem('ll_welcomed', '1');
+        welcomeEl.classList.add('modal-hidden');
         welcomeEl.style.opacity = '0';
-        setTimeout(() => welcomeEl.classList.add('hidden'), 300);
+        setTimeout(() => {
+            welcomeEl.classList.add('hidden');
+            welcomeEl.classList.remove('modal-hidden');
+            welcomeEl.style.opacity = '';
+        }, 300);
     };
 
     /* ── Tab Navigation ── */
@@ -74,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
         progressLabel: q('#status-progress-label'),
         progressFill: q('#status-progress-fill'),
         heroTitle: q('#files-hero-title'),
-        heroSub: q('#files-hero-sub')
+        heroSub: q('#files-hero-sub'),
+        lottieWrap: q('#status-lottie-wrap'),
+        lottiePlayer: q('#status-lottie')
     };
 
     let clientTransferState = null;
@@ -110,7 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }[state.phase] || 'Active';
 
         statusNodes.title.textContent = state.title || 'Ready to transfer';
-        statusNodes.detail.textContent = state.detail || 'Pick a nearby device, stage a file, or wait for an incoming transfer.';
+        statusNodes.detail.textContent = (state.phase === 'failed' && state.error)
+            ? (state.detail ? `${state.detail} (${state.error})` : state.error)
+            : (state.detail || 'Pick a nearby device, stage a file, or wait for an incoming transfer.');
         statusNodes.phaseLabel.textContent = state.phase === 'idle' ? 'Standing by' : state.phase.replace(/_/g, ' ');
         statusNodes.progressLabel.textContent = progressText;
         statusNodes.progressFill.style.width = `${progressWidth}%`;
@@ -133,6 +166,33 @@ document.addEventListener('DOMContentLoaded', () => {
         statusNodes.heroSub.textContent = state.phase === 'idle'
             ? 'You\'ll see every step here: staged, contacting receiver, sending, downloading, and finished.'
             : state.detail || 'Live transfer updates will appear here.';
+
+        const LOTTIE_URLS = {
+            connecting: 'lottie_loading.json',
+            waiting: 'lottie_loading.json',
+            staging: 'lottie_loading.json',
+            sending: 'lottie_transfer.json',
+            receiving: 'lottie_transfer.json',
+            done: 'lottie_success.json',
+            failed: 'lottie_error.json'
+        };
+
+        if (state.phase === 'idle' || window.lottiesBroken) {
+            statusNodes.lottieWrap.style.display = 'none';
+        } else {
+            statusNodes.lottieWrap.classList.remove('hidden');
+            statusNodes.lottieWrap.style.display = 'flex';
+            const targetUrl = LOTTIE_URLS[state.phase] || LOTTIE_URLS.sending;
+            if (statusNodes.lottiePlayer.getAttribute('src') !== targetUrl) {
+                statusNodes.lottiePlayer.setAttribute('src', targetUrl);
+                if (state.phase === 'done' || state.phase === 'failed') {
+                    statusNodes.lottiePlayer.removeAttribute('loop');
+                } else {
+                    statusNodes.lottiePlayer.setAttribute('loop', '');
+                }
+            }
+        }
+
         lastPhase = state.phase || 'idle';
     }
 
@@ -419,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clientTransferState = {
                 phase: 'failed', direction: 'send', title: 'Transfer failed',
                 detail: error?.message || 'Connection failed',
+                error: error?.message || 'Connection failed',
                 fileName: file.name, peerName: name, totalBytes: file.size, transferredBytes: 0
             };
             renderTransferState(clientTransferState);
@@ -477,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clientTransferState = {
                 phase: 'failed', direction: 'send', title: 'Upload failed',
                 detail: error?.message || 'Upload interrupted.',
+                error: error?.message || 'Upload interrupted',
                 fileName: lastSent?.[0]?.name || '',
                 peerName: clientTransferState?.peerName || '',
                 totalBytes: lastSent?.[0]?.size || 0, transferredBytes: 0

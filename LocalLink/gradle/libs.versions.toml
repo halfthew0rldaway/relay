@@ -13,6 +13,7 @@ roomKtx = "2.6.1"
 ksp = "2.0.0-1.0.22"
 ktor = "2.3.12"
 coil = "2.7.0"
+lottie = "6.4.0"
 
 
 [libraries]
@@ -40,6 +41,7 @@ ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref =
 ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
 ktor-server-partial-content = { group = "io.ktor", name = "ktor-server-partial-content", version.ref = "ktor" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 
 [plugins]

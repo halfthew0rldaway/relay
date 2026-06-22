@@ -66,8 +66,9 @@ dependencies {
     implementation(libs.ktor.server.cio)
     implementation(libs.ktor.server.partial.content)
 
-    // Image loading
+    // Image & Animation loading
     implementation(libs.coil.compose)
+    implementation(libs.lottie.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

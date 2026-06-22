@@ -26,6 +26,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import dev.bleu.relay.data.model.MediaCategory
 import dev.bleu.relay.data.model.MediaFile
+import dev.bleu.relay.ui.components.AnimatedLoadingState
+import dev.bleu.relay.ui.components.AnimatedEmptyState
 import dev.bleu.relay.ui.components.BottomNavigationBar
 import dev.bleu.relay.ui.components.NavTab
 import dev.bleu.relay.ui.theme.*
@@ -161,19 +163,13 @@ fun FileManagerScreen(
         ) {
             when {
                 loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = Primary)
+                    AnimatedLoadingState(message = "Loading files...")
                 }
                 mediaFiles.isEmpty() -> Box(
                     Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Icon(Icons.Filled.FolderOff, null, tint = Outline, modifier = Modifier.size(48.dp))
-                        Text("No files found", color = Outline, fontSize = 14.sp)
-                    }
+                    AnimatedEmptyState(message = "No files found in this category")
                 }
                 activeCategory == MediaCategory.IMAGES || activeCategory == MediaCategory.VIDEOS ->
                     MediaGrid(files = mediaFiles, onFileClick = onFileOpen)

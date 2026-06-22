@@ -7,7 +7,8 @@ data class TransferProgress(
     val speedBytesPerSec: Long = 0L,
     val isDone: Boolean = false,
     val isFailed: Boolean = false,
-    val isCancelled: Boolean = false
+    val isCancelled: Boolean = false,
+    val errorMessage: String? = null
 ) {
     val fraction: Float
         get() = if (totalBytes > 0L) (transferredBytes.toFloat() / totalBytes).coerceIn(0f, 1f) else 0f

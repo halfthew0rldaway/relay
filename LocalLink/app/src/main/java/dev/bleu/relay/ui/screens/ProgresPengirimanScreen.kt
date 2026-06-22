@@ -17,8 +17,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.bleu.relay.ui.components.AnimatedSuccessState
+import dev.bleu.relay.ui.components.AnimatedErrorState
 import dev.bleu.relay.ui.components.BottomNavigationBar
 import dev.bleu.relay.ui.components.NavTab
+import androidx.compose.animation.core.animateFloatAsState
 import dev.bleu.relay.ui.theme.*
 import dev.bleu.relay.viewmodel.MainViewModel
 
@@ -97,8 +100,9 @@ fun ProgresPengirimanScreen(
                         color = if (progress.isDone) Primary else MaterialTheme.colorScheme.onSurface
                     )
 
+                    val animatedProgress by animateFloatAsState(targetValue = progress.fraction, label = "progress")
                     LinearProgressIndicator(
-                        progress = { progress.fraction },
+                        progress = { animatedProgress },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(8.dp)
@@ -129,44 +133,14 @@ fun ProgresPengirimanScreen(
                     }
 
                     if (progress.isDone) {
-                        Surface(
-                            color = Primary.copy(alpha = 0.10f),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = Primary, modifier = Modifier.size(24.dp))
-                                Text("Transfer complete.", color = Primary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                            }
-                        }
+                        AnimatedSuccessState(message = "Transfer complete.", modifier = Modifier.padding(top = 8.dp))
                     }
 
                     if (progress.isFailed || progress.isCancelled) {
-                        Surface(
-                            color = Error.copy(alpha = 0.10f),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(Icons.Filled.Error, contentDescription = null, tint = Error, modifier = Modifier.size(24.dp))
-                                Text(
-                                    if (progress.isCancelled) "Transfer cancelled." else "Transfer failed.",
-                                    color = Error,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp
-                                )
-                            }
-                        }
+                        AnimatedErrorState(
+                            message = if (progress.isCancelled) "Transfer cancelled." else (progress.errorMessage ?: "Transfer failed."),
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
                     }
                 }
             }
