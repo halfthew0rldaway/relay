@@ -903,8 +903,8 @@ button:active {
 
 .welcome-anim-wrap {
     flex-shrink: 0;
-    width: 260px;
-    height: 260px;
+    width: 320px;
+    height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
