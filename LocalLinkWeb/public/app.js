@@ -75,6 +75,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     };
 
+    q('#btn-welcome-how').onclick = () => {
+        // Hide welcome, open how-it-works
+        welcomeEl.classList.add('modal-hidden');
+        welcomeEl.style.opacity = '0';
+        setTimeout(() => {
+            welcomeEl.classList.add('hidden');
+            welcomeEl.classList.remove('modal-hidden');
+            welcomeEl.style.opacity = '';
+            q('#how-modal').classList.remove('hidden');
+        }, 280);
+    };
+
+    /* ── How it Works Modal ── */
+    const howModal = q('#how-modal');
+    if (q('#btn-how')) {
+        q('#btn-how').onclick = () => {
+            howModal.classList.remove('hidden');
+        };
+    }
+    if (q('#btn-close-how')) {
+        q('#btn-close-how').onclick = () => {
+            howModal.classList.add('modal-hidden');
+            howModal.style.opacity = '0';
+            setTimeout(() => {
+                howModal.classList.add('hidden');
+                howModal.classList.remove('modal-hidden');
+                howModal.style.opacity = '';
+            }, 300);
+        };
+    }
+
     /* ── Tab Navigation ── */
 
     const navBtns = document.querySelectorAll('.nav-btn');
@@ -102,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         phaseLabel: q('#status-phase-label'),
         progressLabel: q('#status-progress-label'),
         progressFill: q('#status-progress-fill'),
+        progressWrap: q('.status-progress-wrap'),
         heroTitle: q('#files-hero-title'),
         heroSub: q('#files-hero-sub'),
         lottieWrap: q('#status-lottie-wrap'),
@@ -167,6 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ? 'You\'ll see every step here: staged, contacting receiver, sending, downloading, and finished.'
             : state.detail || 'Live transfer updates will appear here.';
 
+        if (state.phase === 'idle') {
+            statusNodes.progressWrap.style.display = 'none';
+        } else {
+            statusNodes.progressWrap.style.display = 'flex';
+        }
+
         const LOTTIE_URLS = {
             connecting: 'lottie_loading.json',
             waiting: 'lottie_loading.json',
@@ -193,7 +231,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Fire celebration overlay exactly once when phase transitions to 'done'
+        const prevPhase = lastPhase;
         lastPhase = state.phase || 'idle';
+
+        if (state.phase === 'done' && prevPhase !== 'done') {
+            // Don't pop up while welcome modal is still visible
+            const welcomeVisible = !q('#welcome-modal').classList.contains('hidden');
+            if (welcomeVisible) return;
+
+            const overlay = q('#done-overlay');
+            const msg = q('#done-card-msg');
+            if (msg) {
+                msg.textContent = state.fileName
+                    ? `"${state.fileName}" landed safely. Zero clouds harmed.`
+                    : 'File delivered. Your router finally did something useful.';
+            }
+            if (overlay) {
+                overlay.classList.remove('hidden');
+                const confetti = q('#done-confetti');
+                if (confetti) confetti.setAttribute('src', 'lottie_done_celebration.json');
+                // Auto-dismiss after 6s
+                const autoTimer = setTimeout(() => overlay.classList.add('hidden'), 6000);
+                const dismissBtn = q('#btn-dismiss-done');
+                if (dismissBtn) {
+                    dismissBtn.onclick = () => {
+                        clearTimeout(autoTimer);
+                        overlay.classList.add('hidden');
+                    };
+                }
+            }
+        }
     }
 
     /* ── Status Polling ── */

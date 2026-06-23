@@ -20,32 +20,44 @@
     <!-- Welcome Modal -->
     <div id="welcome-modal" class="modal-backdrop hidden">
         <div class="welcome-card">
-            <div class="welcome-top" style="flex-direction: column; align-items: center; gap: 1rem;">
-                <div id="welcome-lottie-wrap" class="welcome-lottie-wrap">
-                    <lottie-player id="welcome-lottie" src="lottie_welcome.json" background="transparent" speed="1" loop
-                        autoplay></lottie-player>
+            <!-- Big Logo Top Center -->
+            <div class="welcome-logo-top">
+                <div class="app-icon-xl">
+                    <span class="material-icons-round">leak_add</span>
                 </div>
-                <span class="version-chip" style="position: static;">v2.0 WEB</span>
+
             </div>
-            <h1 class="welcome-title">Relay<br><span class="accent">Web</span></h1>
-            <p class="welcome-sub">Zero-copy. Zero-internet. File transfers over LAN.</p>
-            <div class="feature-rows">
-                <div class="feature-row">
-                    <span class="material-icons-round ficon">push_pin</span>
-                    <span>Tap the <strong>pin icon</strong> on any device card to set it as your send target</span>
+            <!-- 2-col: Text content left, animation right -->
+            <div class="welcome-body">
+                <div class="welcome-copy">
+                    <h1 class="welcome-title">Relay<br><span class="accent">Web</span></h1>
+                    <p class="welcome-sub">Zero-copy. Zero-internet. File transfers over LAN.</p>
+                    <div class="feature-rows">
+                        <div class="feature-row">
+                            <span class="material-icons-round ficon">push_pin</span>
+                            <span>Tap the <strong>pin icon</strong> on any device card to set it as your send target</span>
+                        </div>
+                        <div class="feature-row">
+                            <span class="material-icons-round ficon">swap_horiz</span>
+                            <span>Discover devices on your <strong>local network</strong> and transfer instantly</span>
+                        </div>
+                        <div class="feature-row">
+                            <span class="material-icons-round ficon">folder_open</span>
+                            <span>Go to <strong>Files</strong> to stage local files and send them to any device</span>
+                        </div>
+                    </div>
+                    <button id="btn-start" class="btn-primary full mt-1">
+                        Start Tunnel <span class="material-icons-round btn-arrow">arrow_forward</span>
+                    </button>
+                    <button id="btn-welcome-how" class="welcome-how-link">
+                        <span class="material-icons-round" style="font-size:1rem;">help_outline</span>
+                        Wait, what does this even do?
+                    </button>
                 </div>
-                <div class="feature-row">
-                    <span class="material-icons-round ficon">swap_horiz</span>
-                    <span>Discover devices on your <strong>local network</strong> and transfer instantly</span>
-                </div>
-                <div class="feature-row">
-                    <span class="material-icons-round ficon">folder_open</span>
-                    <span>Go to <strong>Files</strong> to stage local files and send them to any device</span>
+                <div class="welcome-anim-wrap" id="welcome-lottie-left-wrap">
+                    <lottie-player src="lottie_welcome_hi.json" background="transparent" speed="0.9" loop autoplay></lottie-player>
                 </div>
             </div>
-            <button id="btn-start" class="btn-primary full mt-1">
-                Start Tunnel <span class="material-icons-round btn-arrow">arrow_forward</span>
-            </button>
         </div>
     </div>
 
@@ -67,6 +79,9 @@
                     </button>
                 </div>
                 <span id="host-badge" class="badge">WEB</span>
+                <button id="btn-how" class="btn-ghost sm" style="padding: 0.35rem; margin-left: 0.25rem;" title="How it works">
+                    <span class="material-icons-round" style="font-size: 1.1rem;">help_outline</span>
+                </button>
             </div>
         </header>
 
@@ -266,6 +281,56 @@
     <!-- Toast -->
     <div id="toast" class="toast hidden"></div>
 
-</body>
+    <!-- Transfer Done Celebration Overlay -->
+    <div id="done-overlay" class="done-overlay hidden">
+        <lottie-player id="done-confetti" src="lottie_done_celebration.json" background="transparent" speed="1.2" style="width: 100%; height: 100%; position: absolute; inset: 0; pointer-events: none;"></lottie-player>
+        <div class="done-card">
+            <span class="material-icons-round done-card-icon">check_circle</span>
+            <h2 class="done-card-title">Transfer Complete</h2>
+            <p class="done-card-sub" id="done-card-msg">File sent successfully.</p>
+            <button id="btn-dismiss-done" class="btn-primary" style="margin-top: 0.75rem;">
+                <span class="material-icons-round">done</span> Nice
+            </button>
+        </div>
+    </div>
 
+    <!-- How It Works Modal -->
+    <div id="how-modal" class="modal-backdrop hidden" style="align-items: flex-end; padding: 0;">
+        <div class="how-card">
+            <div class="how-header">
+                <h2>How Relay Actually Works</h2>
+                <button id="btn-close-how" class="btn-ghost sm" style="padding: 0.5rem;"><span class="material-icons-round">close</span></button>
+            </div>
+            <div class="how-body">
+                <div class="how-lottie-wrap">
+                    <lottie-player src="lottie_how.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
+                <div class="how-features">
+                    <div class="how-feature">
+                        <span class="material-icons-round accent" style="background: var(--surface-highest);">cloud_off</span>
+                        <div>
+                            <h4>Zero Cloud BS</h4>
+                            <p>No servers in Virginia. No data harvesting. Just your local network doing what you actually pay it for.</p>
+                        </div>
+                    </div>
+                    <div class="how-feature">
+                        <span class="material-icons-round accent" style="background: var(--surface-highest);">compare_arrows</span>
+                        <div>
+                            <h4>Peer-to-Peer Direct</h4>
+                            <p>Files travel directly from device A to device B. We don't intercept them, mainly because we don't care about your homework.</p>
+                        </div>
+                    </div>
+                    <div class="how-feature">
+                        <span class="material-icons-round accent" style="background: var(--surface-highest);">speed</span>
+                        <div>
+                            <h4>Stupidly Fast</h4>
+                            <p>Speed is limited only by your router. If it's slow, blame your ISP or that cheap router you bought in 2015.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
 </html>
