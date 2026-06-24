@@ -1,15 +1,15 @@
 /**
- * app.js — Relay Web frontend.
- *
- * Handles:
- *   - Device discovery display
- *   - File staging (drag/drop, browse)
- *   - Send flow (host → handshake → upload)
- *   - Receive flow (poll incoming → accept → progress)
- *   - Transfer status display
- *   - History and settings
- *   - Device pinning
- */
+* app.js — Relay Web frontend.
+*
+* Handles:
+*   - Device discovery display
+*   - File staging (drag/drop, browse)
+*   - Send flow (host → handshake → upload)
+*   - Receive flow (poll incoming → accept → progress)
+*   - Transfer status display
+*   - History and settings
+*   - Device pinning
+*/
 
 'use strict';
 
@@ -39,12 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Welcome Modal ── */
 
     const welcomeEl = q('#welcome-modal');
-    
+
     // Global Lottie Error Handler: removes broken animations from the DOM flow to prevent blank gaps
     window.lottiesBroken = false;
     document.querySelectorAll('lottie-player').forEach(player => {
         const wrap = player.parentElement && player.parentElement.id.includes('wrap') ? player.parentElement : player;
-        
+
         const collapse = () => {
             window.lottiesBroken = true;
             wrap.classList.add('hidden');
@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         player.addEventListener('error', collapse);
-        
+
         let loaded = false;
         player.addEventListener('ready', () => { loaded = true; });
         player.addEventListener('load', () => { loaded = true; });
-        
+
         // If animation fails to start within 1.5s, assume broken and collapse naturally
         setTimeout(() => {
             if (!loaded) collapse();
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     welcomeEl.classList.remove('hidden');
-    
+
     q('#btn-start').onclick = () => {
         welcomeEl.classList.add('modal-hidden');
         welcomeEl.style.opacity = '0';

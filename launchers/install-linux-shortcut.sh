@@ -13,7 +13,7 @@ mkdir -p "$DESKTOP_DIR"
 cat <<EOF > "$DESKTOP_FILE"
 [Desktop Entry]
 Name=Relay Server
-Comment=Zero-copy, local-first file transfer
+Comment=Buffered streaming, local-first file transfer
 # Run the node server and keep the terminal open so you can see logs
 Exec=sh -c "cd '$DIR' && npm start; exec bash"
 Terminal=true

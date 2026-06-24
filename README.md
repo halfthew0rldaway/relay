@@ -6,7 +6,7 @@ Relay adalah aplikasi transfer file lokal (Local Area Network) peer-to-peer (P2P
 
 ## Deskripsi Sistem
 
-Relay memungkinkan pengguna untuk mengirim dan menerima file secara langsung antar perangkat dalam satu jaringan lokal yang sama (Wi-Fi atau Ethernet) dengan menggunakan arsitektur zero-copy dan zero-internet. 
+Relay memungkinkan pengguna untuk mengirim dan menerima file secara langsung antar perangkat dalam satu jaringan lokal yang sama (Wi-Fi atau Ethernet) dengan menggunakan arsitektur buffered-streaming dan zero-internet. 
 
 ### Versi Mobile (Android)
 Aplikasi mobile Relay berfungsi sebagai simpul utama (node) dalam mobilitas sehari-hari. Aplikasi ini dibangun dengan standar Android modern, difokuskan pada efisiensi baterai dan kecepatan transfer. Tentu saja, aplikasi ini berjalan secara stabil dan kompatibel pada seluruh perangkat Android masa kini. Fitur utamanya mencakup:
@@ -51,7 +51,7 @@ sequenceDiagram
     
     alt Persetujuan Diterima
         Penerima->>Pengirim: Accept Response
-        Pengirim->>Penerima: Streaming Byte File (Zero-copy)
+        Pengirim->>Penerima: Streaming Byte File (Buffered)
         Penerima-->>Pengirim: Progress Update
         Pengirim->>Penerima: Selesai
     else Persetujuan Ditolak

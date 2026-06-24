@@ -1,7 +1,7 @@
 {
     "name": "relay-web",
     "version": "1.0.1",
-    "description": "Zero-copy, local-first file transfer over LAN.",
+    "description": "Buffered streaming, local-first file transfer over LAN.",
     "author": "bleu <bleu@localhost>",
     "homepage": "https://github.com/halfthew0rldaway/relay",
     "main": "server.js",
