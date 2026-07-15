@@ -1,6 +1,4 @@
 <div align="center">
-  <img src="design_docs/png/web_mockup.png" width="100%" alt="Relay Banner">
-  
   <h1>🚀 Relay</h1>
   <p><b>Ekosistem transfer file peer-to-peer (P2P) jaringan lokal berkecepatan tinggi tanpa kuota internet.</b></p>
 
