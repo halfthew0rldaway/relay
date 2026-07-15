@@ -100,7 +100,7 @@ flowchart TD
     Auto -- Ya --> OK1[Transmisi Respons HTTP 200 OK]
     OK1 --> Stream2[Buka File Stream untuk Menulis]
     Stream2 --> Hist2[Pencatatan Transaksi ke Riwayat]
-    Auto -- Tidak --> Prompt[Tampilkan Dialog Persetujuan (Accept/Reject)]
+    Auto -- Tidak --> Prompt["Tampilkan Dialog Persetujuan (Accept/Reject)"]
     Prompt --> Ask{Pengguna Menyetujui Transfer?}
     Ask -- Ya --> OK2[Transmisi Respons HTTP 200 OK]
     OK2 --> Stream3[Buka File Stream untuk Menulis]
