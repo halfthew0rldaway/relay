@@ -2,60 +2,60 @@
   <img src="design_docs/png/web_mockup.png" width="100%" alt="Relay Banner">
   
   <h1>🚀 Relay</h1>
-  <p><b>A high-velocity, zero-internet peer-to-peer local file transfer ecosystem.</b></p>
+  <p><b>Ekosistem transfer file peer-to-peer (P2P) jaringan lokal berkecepatan tinggi tanpa kuota internet.</b></p>
 
   <!-- Badges -->
   <p>
-    <img src="https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge" alt="Version">
-    <img src="https://img.shields.io/badge/build-passing-success?style=for-the-badge" alt="Build">
+    <img src="https://img.shields.io/badge/versi-1.0.0-blue?style=for-the-badge" alt="Version">
+    <img src="https://img.shields.io/badge/build-berhasil-success?style=for-the-badge" alt="Build">
     <img src="https://img.shields.io/badge/platform-Android%20%7C%20Web-lightgrey?style=for-the-badge" alt="Platform">
-    <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="License">
+    <img src="https://img.shields.io/badge/lisensi-MIT-green?style=for-the-badge" alt="License">
   </p>
 </div>
 
 ---
 
 <details>
-<summary>📖 <b>Table of Contents</b></summary>
+<summary>📖 <b>Daftar Isi</b> (Klik untuk membuka)</summary>
 
-- [✨ Key Features](#-key-features)
-- [📸 Interfaces & Component Previews](#-interfaces--component-previews)
-- [🛠️ Tech Stack](#-tech-stack)
-- [🏗️ System Architecture](#-system-architecture)
-- [🚀 Getting Started](#-getting-started)
-- [💻 Usage Guide](#-usage-guide)
-- [🤝 Contributing & License](#-contributing--license)
+- [✨ Fitur Utama](#-fitur-utama)
+- [📸 Antarmuka & Pratinjau](#-antarmuka--pratinjau)
+- [🛠️ Teknologi (Tech Stack)](#-teknologi-tech-stack)
+- [🏗️ Arsitektur Sistem](#-arsitektur-sistem)
+- [🚀 Panduan Instalasi](#-panduan-instalasi)
+- [💻 Panduan Penggunaan](#-panduan-penggunaan)
+- [🤝 Kontribusi & Lisensi](#-kontribusi--lisensi)
 
 </details>
 
 ---
 
-## ✨ Key Features
+## ✨ Fitur Utama
 
-*   **⚡ Blazing Fast Transfers:** Utilizes full local network bandwidth via Direct TCP/HTTP streaming, completely bypassing internet limits.
-*   **🔍 mDNS Auto-Discovery:** Seamlessly detects nearby active devices without entering IP addresses manually.
-*   **🛡️ Secure Handshake:** Enforces a strict `Accept`/`Reject` protocol, ensuring no unwanted files enter your system.
-*   **🤖 Auto-Accept Trust:** Pin trusted devices to skip confirmation prompts for instant transfers.
-*   **📱 Universal Compatibility:** Runs natively on Android (Kotlin) and flawlessly on any desktop via a lightweight Web Server (Node.js).
+*   **⚡ Transfer Sangat Cepat:** Memanfaatkan seluruh *bandwidth* jaringan lokal via *Direct TCP/HTTP streaming*, tanpa dibatasi oleh kecepatan internet provider Anda.
+*   **🔍 mDNS Auto-Discovery:** Mendeteksi perangkat aktif di sekitar Anda secara otomatis tanpa perlu mengetik alamat IP secara manual.
+*   **🛡️ Keamanan Handshake:** Menerapkan protokol dialog `Terima`/`Tolak` secara ketat, memastikan tidak ada file nyasar yang masuk ke perangkat Anda tanpa izin.
+*   **🤖 Kepercayaan Auto-Accept:** Sematkan (*pin*) perangkat yang Anda percayai untuk melewati dialog konfirmasi demi transfer file instan.
+*   **📱 Kompatibilitas Universal:** Berjalan secara *native* di Android (Kotlin) dan lancar di Desktop manapun menggunakan Server Web ringan (Node.js).
 
 ---
 
-## 📸 Interfaces & Component Previews
+## 📸 Antarmuka & Pratinjau
 
-Here is a glimpse of the application running across different environments.
+Berikut adalah cuplikan aplikasi Relay yang berjalan di lingkungan Web maupun Mobile.
 
 <table align="center">
   <tr>
-    <td align="center"><b>Web Dashboard</b></td>
-    <td align="center"><b>Mobile Transfer</b></td>
+    <td align="center"><b>Dasbor Web</b></td>
+    <td align="center"><b>Menu Transfer Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src="design_docs/png/dashboardweb.png" width="500"></td>
     <td align="center"><img src="design_docs/png/mobiletransfer.jpeg" width="250"></td>
   </tr>
   <tr>
-    <td align="center"><b>Mobile History</b></td>
-    <td align="center"><b>Mobile Settings</b></td>
+    <td align="center"><b>Riwayat Mobile</b></td>
+    <td align="center"><b>Pengaturan Mobile</b></td>
   </tr>
   <tr>
     <td align="center"><img src="design_docs/png/mobilehistory.jpeg" width="250"></td>
@@ -65,7 +65,7 @@ Here is a glimpse of the application running across different environments.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Teknologi (Tech Stack)
 
 <div align="center">
   <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white" />
@@ -77,37 +77,37 @@ Here is a glimpse of the application running across different environments.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Arsitektur Sistem
 
-Relay uses a robust hybrid P2P topography. Below is the procedural state lifecycle for the discovery and transfer engine:
+Relay menggunakan arsitektur hibrida P2P yang tangguh. Berikut adalah siklus prosedural (*flowchart*) untuk penemuan jaringan dan mesin transfer:
 
 ```mermaid
 flowchart TD
-    Start([App Initialization]) --> Init[Initialize HTTP Server]
-    Init --> MDNS[Broadcast via mDNS Bonjour]
-    MDNS --> Wait{Awaiting User Action}
+    Start([Inisialisasi Aplikasi]) --> Init[Aktivasi HTTP Server Ktor / Express]
+    Init --> MDNS[Penyiaran Identitas via Protokol mDNS Bonjour]
+    MDNS --> Wait{Menunggu Aksi / Request Masuk}
 
-    Wait -- Transfer Out --> Send[Select Local File]
-    Send --> Target[Select Target from mDNS Registry]
-    Target --> Meta[POST Metadata Handshake]
-    Meta --> Resp{HTTP 200 OK?}
-    Resp -- Yes --> Stream1[Stream Binary Data]
-    Stream1 --> Hist1[Save to Transfer History]
-    Resp -- No --> Fail[Transfer Rejected]
+    Wait -- Transfer Keluar --> Send[Pilih File dari Penyimpanan Lokal]
+    Send --> Target[Pilih Target dari Registri Discovery mDNS]
+    Target --> Meta[POST Metadata ke IP & Port Target]
+    Meta --> Resp{Respons HTTP 200 OK?}
+    Resp -- Ya --> Stream1[Inisiasi Direct Binary Data Stream]
+    Stream1 --> Hist1[Pencatatan Transaksi ke Riwayat]
+    Resp -- Tidak --> Fail[Notifikasi Transfer Ditolak]
     Hist1 --> Wait
     Fail --> Wait
 
-    Wait -- Incoming Request --> Recv[Receive HTTP POST Handshake]
-    Recv --> Auto{Auto-Accept Enabled?}
-    Auto -- Yes --> OK1[Respond HTTP 200 OK]
-    OK1 --> Stream2[Open Local File Stream]
-    Stream2 --> Hist2[Save to Transfer History]
-    Auto -- No --> Prompt[Show Accept/Reject Dialog]
-    Prompt --> Ask{User Accepts?}
-    Ask -- Yes --> OK2[Respond HTTP 200 OK]
-    OK2 --> Stream3[Open Local File Stream]
-    Stream3 --> Hist3[Save to Transfer History]
-    Ask -- No --> Deny[Respond HTTP 403 Forbidden]
+    Wait -- Request Masuk --> Recv[Penerimaan HTTP POST Metadata Handshake]
+    Recv --> Auto{Parameter Auto-Accept Aktif?}
+    Auto -- Ya --> OK1[Transmisi Respons HTTP 200 OK]
+    OK1 --> Stream2[Buka File Stream untuk Menulis]
+    Stream2 --> Hist2[Pencatatan Transaksi ke Riwayat]
+    Auto -- Tidak --> Prompt[Tampilkan Dialog Persetujuan (Accept/Reject)]
+    Prompt --> Ask{Pengguna Menyetujui Transfer?}
+    Ask -- Ya --> OK2[Transmisi Respons HTTP 200 OK]
+    OK2 --> Stream3[Buka File Stream untuk Menulis]
+    Stream3 --> Hist3[Pencatatan Transaksi ke Riwayat]
+    Ask -- Tidak --> Deny[Transmisi Respons HTTP 403 Forbidden]
     Hist2 --> Wait
     Hist3 --> Wait
     Deny --> Wait
@@ -115,54 +115,49 @@ flowchart TD
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Panduan Instalasi
 
-Follow these instructions to get the Relay ecosystem running on your devices.
+Ikuti langkah-langkah di bawah ini untuk menjalankan ekosistem Relay di perangkat Anda.
 
-<details>
-<summary><b>1. Setting up the Web Server (Desktop/Laptop)</b></summary>
-<br>
+### 1. Menjalankan Server Web (Desktop/Laptop)
 
-We provide pre-configured launcher scripts for immediate deployment.
+Kami telah menyediakan skrip otomasi (*Launchers*) untuk *deployment* seketika.
 
-**🐧 For Linux Users (Fedora, Ubuntu, Arch, Hyprland):**
-*   **System Integration:** Run `./launchers/install-linux-shortcut.sh` to install Relay natively into your app drawer (GNOME/Wofi).
-*   **Terminal Run:** Execute `./launchers/linux-start.sh`.
+**🐧 Pengguna Linux (Fedora, Ubuntu, Arch, Hyprland, dll.):**
+*   **Opsi Integrasi Sistem (Rekomendasi):** Jalankan `./launchers/install-linux-shortcut.sh` satu kali saja. Skrip ini akan mendaftarkan Relay Server secara *native* ke menu pencarian aplikasi OS Anda (GNOME/Wofi).
+*   **Opsi Eksekusi Terminal Langsung:** Jalankan `./launchers/linux-start.sh` di terminal Anda.
 
-**🪟 For Windows Users:**
-*   Double-click `launchers\windows-start.bat`. It will dynamically resolve all Node dependencies and launch the server.
+**🪟 Pengguna Windows:**
+*   Klik ganda (Double-click) pada file `launchers\windows-start.bat`. Skrip ini akan secara otomatis mengunduh semua dependensi Node.js yang hilang dan langsung menjalankan server lokal.
 
-</details>
+### 2. Memasang Aplikasi Android
 
-<details>
-<summary><b>2. Compiling the Android Application</b></summary>
-<br>
+**Cara Instan:**
+Anda dapat mengunduh dan menginstal file `Relay.apk` yang sudah tersedia di repositori utama (*root folder*).
 
-Compile the Android APK locally using the Gradle Wrapper:
-
+**Cara Kompilasi Ulang (Build dari Source Code):**
+Untuk mengompilasi APK secara mandiri menggunakan Gradle Wrapper, jalankan perintah berikut:
 ```bash
 cd LocalLink
 ./gradlew assembleDebug
 ```
-The resulting artifact `Relay.apk` will be generated in the root directory.
-
-</details>
+*Artifact* aplikasi yang sudah jadi akan muncul di repositori ini.
 
 ---
 
-## 💻 Usage Guide
+## 💻 Panduan Penggunaan
 
-Once both the Web Server and the Android app are running on the same Wi-Fi network:
+Setelah Server Web dan aplikasi Android berjalan di satu jaringan Wi-Fi yang sama:
 
-1. **Discovery:** The apps will automatically discover each other in the "Sekitar Anda" (Nearby) tab.
-2. **Transferring:**
-   * **From Android:** Tap the target device -> Select File -> Send.
-   * **From Web:** Drag and Drop a file into the dashboard -> Click "Kirim" on the target device card.
-3. **Approving:** The receiving device will prompt a dialog. Click **Accept** to initiate the high-speed transfer.
+1. **Penemuan Jaringan:** Aplikasi akan otomatis menemukan satu sama lain di tab "Perangkat Terdekat" atau Dasbor.
+2. **Proses Pengiriman:**
+   * **Dari Android:** Sentuh perangkat tujuan -> Pilih File -> Kirim.
+   * **Dari Web:** *Drag and Drop* file apa saja ke tengah dasbor -> Klik tombol "Kirim" pada kartu perangkat target.
+3. **Proses Penerimaan:** Perangkat penerima akan memunculkan dialog masuk. Klik **Terima (Accept)** untuk memulai transfer berkecepatan tinggi!
 
 ---
 
-## 🤝 Contributing & License
+## 🤝 Kontribusi & Lisensi
 
-This project is licensed under the **MIT License**.
-Feel free to open Issues or submit Pull Requests for structural enhancements and UI optimizations.
+Proyek ini didistribusikan di bawah lisensi **MIT License**.
+Silakan buat *Issues* atau kirimkan *Pull Requests* jika Anda ingin meningkatkan arsitektur jaringan atau mengoptimalkan antarmuka (UI).
