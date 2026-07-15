@@ -1,90 +1,79 @@
 # Relay
 
-Relay adalah aplikasi transfer file lokal (Local Area Network) peer-to-peer (P2P) yang dirancang untuk kecepatan, keamanan, dan kemudahan tanpa memerlukan koneksi internet aktif. Proyek ini terdiri dari dua komponen utama: aplikasi Web dan aplikasi Mobile (Android).
+Relay adalah sistem aplikasi transfer file *peer-to-peer* (P2P) berbasis Jaringan Area Lokal (LAN) yang direkayasa secara khusus untuk kecepatan tinggi, keamanan data, dan kemudahan akses tanpa memerlukan koneksi internet aktif. Ekosistem perangkat lunak ini terdiri dari dua instrumen utama: Aplikasi Web dan Klien Mobile (Android).
 
-![Relay Web](screenshot.png)
+## Antarmuka Visual (Mockup)
 
-## Deskripsi Sistem
+### Dasbor Web
+![Dasbor Web Relay](design_docs/png/web_mockup.png)
 
-Relay memungkinkan pengguna untuk mengirim dan menerima file secara langsung antar perangkat dalam satu jaringan lokal yang sama (Wi-Fi atau Ethernet) dengan menggunakan arsitektur buffered-streaming dan zero-internet. 
+### Antarmuka Mobile
+![Antarmuka Mobile Relay](design_docs/png/mobile_mockup.png)
 
-### Versi Mobile (Android)
-Aplikasi mobile Relay berfungsi sebagai simpul utama (node) dalam mobilitas sehari-hari. Aplikasi ini dibangun dengan standar Android modern, difokuskan pada efisiensi baterai dan kecepatan transfer. Tentu saja, aplikasi ini berjalan secara stabil dan kompatibel pada seluruh perangkat Android masa kini. Fitur utamanya mencakup:
-*   **Pemindaian Jaringan Otomatis:** Menemukan perangkat lain di jaringan lokal menggunakan mDNS (Multicast DNS) dan Network Service Discovery (NSD).
-*   **Transfer Latar Belakang:** Mampu menerima dan mengirim file sambil tetap menjaga stabilitas aplikasi meskipun pengguna sedang membuka aplikasi lain.
-*   **Manajemen File Terintegrasi:** Mengelola file yang diunduh langsung di dalam aplikasi dengan antarmuka yang bersih dan responsif.
-*   **Keamanan Terdesentralisasi:** Setiap transfer harus melalui persetujuan manual (Accept/Reject) kecuali jika fitur Auto-accept diaktifkan untuk perangkat yang dipercayai.
+## Spesifikasi Teknis & Arsitektur
 
-### Versi Web
-Versi Web dari Relay memberikan fleksibilitas tertinggi karena dapat diakses secara langsung melalui peramban (browser). Ini memastikan aplikasi berfungsi secara sempurna melintasi semua jenis perangkat dan sistem operasi yang memungkinkan (Windows, macOS, Linux, iOS, ChromeOS, dll.) tanpa perlu proses instalasi yang berbelit-belit.
-*   **Drag-and-Drop Staging:** Pengguna dapat menarik dan menaruh file ke dalam antarmuka untuk persiapan pengiriman (staging).
-*   **Pin Perangkat:** Memungkinkan pengguna menyematkan satu perangkat spesifik untuk pengiriman cepat (Quick Send).
-*   **Riwayat Transfer:** Mencatat semua log pengiriman dan penerimaan file secara komprehensif.
+Relay menggunakan arsitektur Klien-Server hibrida. Setiap simpul perangkat beroperasi secara simultan sebagai peladen (menerima aliran data) dan klien (mengirimkan aliran data).
 
-## Arsitektur & Teknologi
+### Stack Teknologi
+*   **Mobile (Android):** Kotlin, Jetpack Compose, Ktor Server (CIO Engine), Room Database, Coil.
+*   **Web (Node.js):** Express, Bonjour-service (Protokol mDNS), Vanilla JS/HTML/CSS.
 
-Relay menggunakan arsitektur Klien-Server hibrida pada setiap instansinya. Setiap perangkat bertindak sebagai peladen (server) dan juga klien secara bersamaan.
+## Diagram Alir Sistem (Flowchart)
 
-### Tech Stack
-*   **Mobile (Android):** Kotlin, Jetpack Compose, Ktor Server (CIO), Room (Database Lokal), Coil (Image Loading).
-*   **Web:** Node.js, Express, Bonjour-service (mDNS), Vanilla HTML/CSS/JS.
-
-## Diagram Alir (Flowchart)
-
-Berikut adalah diagram alir bagaimana protokol Relay bekerja ketika mentransfer file antar perangkat:
+Diagram di bawah ini merepresentasikan siklus perpindahan status (*state lifecycle*) secara prosedural pada saat sistem melakukan penemuan jaringan (*network discovery*) dan eksekusi transfer file.
 
 ```mermaid
-sequenceDiagram
-    participant Pengirim
-    participant Jaringan
-    participant Penerima
+flowchart TD
+    Start([Inisialisasi Aplikasi]) --> Init[Aktivasi HTTP Server Ktor / Express]
+    Init --> MDNS[Penyiaran Identitas via Protokol mDNS Bonjour]
+    MDNS --> Wait{Menunggu Aksi Pengguna atau Request HTTP Masuk}
 
-    Pengirim->>Jaringan: Broadcast Layanan (mDNS / Bonjour)
-    Penerima->>Jaringan: Broadcast Layanan (mDNS / Bonjour)
-    Jaringan-->>Pengirim: Resolusi IP & Port Penerima
-    Jaringan-->>Penerima: Resolusi IP & Port Pengirim
-    
-    Pengirim->>Penerima: Request Transfer (Metadata File)
-    Penerima-->>Pengirim: Status (Menunggu Persetujuan)
-    
-    Note over Penerima: Menampilkan Dialog Persetujuan (Accept/Reject)
-    
-    alt Persetujuan Diterima
-        Penerima->>Pengirim: Accept Response
-        Pengirim->>Penerima: Streaming Byte File (Buffered)
-        Penerima-->>Pengirim: Progress Update
-        Pengirim->>Penerima: Selesai
-    else Persetujuan Ditolak
-        Penerima->>Pengirim: Reject Response
-    end
+    Wait -- Transfer Keluar --> Send[Seleksi File dari Penyimpanan Lokal]
+    Send --> Target[Seleksi Target dari Registri Discovery mDNS]
+    Target --> Meta[Transmisi POST Metadata ke IP & Port Target]
+    Meta --> Resp{Respons HTTP 200 OK?}
+    Resp -- Ya --> Stream1[Inisiasi Direct Binary Data Stream]
+    Stream1 --> Prog[Render Kalkulasi Progres Real-time]
+    Prog --> Hist1[Pencatatan Transaksi ke Riwayat Transfer]
+    Resp -- Tidak --> Fail[Render Notifikasi Transfer Ditolak]
+    Hist1 --> Wait
+    Fail --> Wait
+
+    Wait -- Request Masuk --> Recv[Penerimaan HTTP POST Metadata Handshake]
+    Recv --> Auto{Parameter Auto-Accept Aktif?}
+    Auto -- Ya --> OK1[Transmisi Respons HTTP 200 OK]
+    OK1 --> Stream2[Inisiasi File Stream untuk Penulisan]
+    Stream2 --> Hist2[Pencatatan Transaksi ke Riwayat Transfer]
+    Auto -- Tidak --> Prompt[Render Dialog Persetujuan ke Layar]
+    Prompt --> Ask{Pengguna Menyetujui Transfer?}
+    Ask -- Ya --> OK2[Transmisi Respons HTTP 200 OK]
+    OK2 --> Stream3[Inisiasi File Stream untuk Penulisan]
+    Stream3 --> Hist3[Pencatatan Transaksi ke Riwayat Transfer]
+    Ask -- Tidak --> Deny[Transmisi Respons HTTP 403 Forbidden]
+    Hist2 --> Wait
+    Hist3 --> Wait
+    Deny --> Wait
 ```
 
-## Cara Kerja
+## Panduan Penggunaan & Peluncuran
 
-1.  **Inisialisasi Layanan:** Saat aplikasi dijalankan, peladen HTTP internal (Ktor untuk Android, Express untuk Web) akan menyala pada port acak yang tersedia.
-2.  **Penemuan (Discovery):** Aplikasi akan menyebarkan eksistensinya melalui mDNS. Layanan ini menyiarkan nama perangkat dan port yang sedang digunakan.
-3.  **Tukar Metadata:** Saat pengguna memilih file untuk dikirim, perangkat pengirim akan mengirimkan metadata (nama file, ukuran) ke alamat IP dan port tujuan menggunakan HTTP POST.
-4.  **Konfirmasi:** Perangkat penerima akan menerima metadata dan menampilkan antarmuka konfirmasi kepada pengguna.
-5.  **Streaming:** Jika disetujui, perangkat penerima memberikan respons OK. Perangkat pengirim kemudian memulai streaming data binari file secara langsung (Direct TCP/HTTP stream). Hal ini dilakukan di atas jaringan lokal, sehingga tidak memakan kuota internet dan memaksimalkan bandwidth router.
+### 1. Menjalankan Server Web (Melalui Launcher)
 
-## Persiapan Repositori (Git Push Ready)
+Untuk mempermudah peluncuran aplikasi Web, skrip otomasi (*Launchers*) telah disediakan di dalam direktori `launchers/`.
 
-Proyek ini telah dibersihkan dari file-file analisis sementara dan konfigurasi sisa. Direktori ini sudah siap untuk di-commit dan di-push ke repositori tanpa ada file sampah yang tidak perlu.
+#### Lingkungan Linux (Fedora, Ubuntu, Arch, dll.)
+*   **Opsi Integrasi Sistem:** Eksekusi skrip `./launchers/install-linux-shortcut.sh` satu kali melalui terminal. Skrip ini akan mendaftarkan Server Relay secara otomatis ke *Application Launcher* bawaan OS (GNOME, Rofi, Wofi). Anda dapat membuka server selayaknya aplikasi biasa.
+*   **Opsi Eksekusi Langsung:** Eksekusi skrip `./launchers/linux-start.sh` secara langsung dari terminal.
 
-## Kompilasi Aplikasi
+#### Lingkungan Windows
+*   Jalankan fail `launchers\windows-start.bat`. Skrip-*batch* ini akan mendeteksi dan mengunduh dependensi Node.js secara otomatis jika belum terpasang, kemudian menjalankan server lokal.
 
-### Build Android (APK)
-Aplikasi Android dapat dikompilasi menjadi APK menggunakan perintah berikut:
+### 2. Kompilasi Klien Android
+
+Aplikasi Android (APK) dapat dikompilasi secara mandiri dari *source code* menggunakan *build-system* Gradle. Eksekusi perintah berikut di terminal:
+
 ```bash
 cd LocalLink
-./gradlew assembleRelease
+./gradlew assembleDebug
 ```
-APK akan diproduksi dan tersedia di repositori ini dengan nama `Relay.apk`.
-
-### Build Web
-Aplikasi Web dapat dijalankan langsung:
-```bash
-cd LocalLinkWeb
-npm install
-npm start
-```
+Kompilasi selesai akan menghasilkan *binary* aplikasi yang ditempatkan secara otomatis pada repositori akar (*root*) dengan nama `Relay.apk`.
