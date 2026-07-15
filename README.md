@@ -136,7 +136,7 @@ Anda dapat mengunduh dan menginstal file `Relay.apk` yang sudah tersedia di repo
 **Cara Kompilasi Ulang (Build dari Source Code):**
 Untuk mengompilasi APK secara mandiri menggunakan Gradle Wrapper, jalankan perintah berikut:
 ```bash
-cd LocalLink
+cd RelayMobile
 ./gradlew assembleDebug
 ```
 *Artifact* aplikasi yang sudah jadi akan muncul di repositori ini.

@@ -4,12 +4,12 @@ dist/
 *.tgz
 
 # === Android build artifacts ===
-LocalLink/app/build/
-LocalLink/build/
-LocalLink/.gradle/
-LocalLink/.kotlin/
-LocalLink/local.properties
-LocalLink/app/build/outputs/apk/
+RelayMobile/app/build/
+RelayMobile/build/
+RelayMobile/.gradle/
+RelayMobile/.kotlin/
+RelayMobile/local.properties
+RelayMobile/app/build/outputs/apk/
 
 # === IDE ===
 .vscode/

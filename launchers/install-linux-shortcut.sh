@@ -3,7 +3,7 @@
 # This script creates a .desktop file so you can launch Relay Server
 # directly from your application launcher (like rofi, wofi, GNOME overview, etc.)
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../LocalLinkWeb" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../RelayWeb" && pwd)"
 DESKTOP_DIR="$HOME/.local/share/applications"
 DESKTOP_FILE="$DESKTOP_DIR/relay-server.desktop"
 

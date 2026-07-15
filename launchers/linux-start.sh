@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Move to the LocalLinkWeb directory relative to this script
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../LocalLinkWeb" && pwd)"
+# Move to the RelayWeb directory relative to this script
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../RelayWeb" && pwd)"
 cd "$DIR" || exit 1
 
 # Check if node_modules exists, install dependencies if not
