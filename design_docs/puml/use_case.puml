@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Pengguna (Pengirim)" as Sender
+actor "Pengguna (Penerima)" as Receiver
+
+rectangle "Sistem Relay Local Transfer" {
+    usecase "Temukan Perangkat (mDNS)" as UC1
+    usecase "Kirim File" as UC2
+    usecase "Terima File" as UC3
+    usecase "Konfirmasi Transfer (Accept/Reject)" as UC4
+    usecase "Kelola Perangkat Disematkan (Pin)" as UC5
+    usecase "Lihat Riwayat Transfer" as UC6
+    usecase "Atur Konfigurasi (Auto-accept dll)" as UC7
+}
+
+Sender --> UC1
+Sender --> UC2
+Sender --> UC5
+Sender --> UC6
+Sender --> UC7
+
+Receiver --> UC3
+Receiver --> UC4
+Receiver --> UC6
+Receiver --> UC7
+
+UC2 ..> UC1 : <<include>>
+UC3 ..> UC4 : <<include>>
+
+@enduml

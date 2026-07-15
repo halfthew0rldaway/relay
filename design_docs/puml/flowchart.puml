@@ -1,0 +1,42 @@
+@startuml
+start
+:Aplikasi Berjalan;
+:Inisialisasi HTTP Server (Ktor / Express);
+:Broadcast Identitas di mDNS (Bonjour);
+
+repeat
+  :Menunggu Aksi Pengguna atau Request Masuk;
+  
+  if (Aksi = Kirim File?) then (Ya)
+    :Pilih File dari Penyimpanan;
+    :Pilih Perangkat dari Daftar Discovery;
+    :POST Metadata ke IP & Port Tujuan;
+    if (Response == OK) then (Ya)
+      :Stream Binary Data;
+      :Tampilkan Progres Pengiriman;
+      :Simpan ke Riwayat;
+    else (Tidak)
+      :Tampilkan Notifikasi Ditolak/Gagal;
+    endif
+    
+  elseif (Aksi = Request Masuk?) then (Ya)
+    :Terima Request HTTP (Metadata);
+    if (Auto-Accept == true) then (Ya)
+      :Respons 200 OK;
+      :Buka File Stream untuk Menulis;
+      :Simpan ke Riwayat;
+    else (Tidak)
+      :Tampilkan Prompt Accept/Reject;
+      if (Pengguna Memilih Accept) then (Ya)
+        :Respons 200 OK;
+        :Buka File Stream;
+        :Simpan ke Riwayat;
+      else (Tidak)
+        :Respons 403 Forbidden;
+      endif
+    endif
+  endif
+repeat while (Aplikasi Tidak Ditutup)
+
+stop
+@enduml

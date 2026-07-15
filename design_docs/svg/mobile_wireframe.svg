@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1650 812" width="1650" height="812" style="background-color: #FFFFFF; font-family: 'Inter', system-ui, sans-serif;">
+  
+  <g transform="translate(0, 0)">
+    <rect width="375" height="812" fill="#F3F4F6" />
+    <rect width="375" height="44" fill="#E5E7EB" />
+    <rect y="44" width="375" height="56" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="16" y="80" font-size="20" font-weight="600" fill="#111827">Relay - Beranda</text>
+    
+    <rect x="16" y="116" width="343" height="180" rx="12" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" stroke-dasharray="4" />
+    <text x="32" y="146" font-size="16" font-weight="600" fill="#374151">Perangkat Terdekat</text>
+    <circle cx="187" cy="220" r="40" fill="none" stroke="#9CA3AF" stroke-width="1" />
+    <circle cx="187" cy="220" r="20" fill="#D1D5DB" />
+    <text x="187" y="280" font-size="12" fill="#6B7280" text-anchor="middle">Memindai mDNS...</text>
+
+    <rect x="16" y="316" width="343" height="70" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <circle cx="46" cy="351" r="16" fill="#E5E7EB" />
+    <text x="74" y="346" font-size="16" font-weight="600" fill="#374151">Desktop-PC</text>
+    <text x="74" y="366" font-size="12" fill="#6B7280">192.168.1.5</text>
+    <rect x="270" y="336" width="70" height="30" rx="4" fill="#00488D" />
+    <text x="305" y="356" fill="#FFFFFF" font-size="12" font-weight="600" text-anchor="middle">Kirim</text>
+
+    <rect y="728" width="375" height="84" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <circle cx="62" cy="760" r="10" fill="#00488D" />
+    <circle cx="187" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="312" cy="760" r="10" fill="#9CA3AF" />
+    <text x="62" y="790" font-size="12" fill="#00488D" text-anchor="middle">Beranda</text>
+  </g>
+
+  <g transform="translate(425, 0)">
+    <rect width="375" height="812" fill="#F3F4F6" />
+    <rect width="375" height="44" fill="#E5E7EB" />
+    <rect y="44" width="375" height="56" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="16" y="80" font-size="20" font-weight="600" fill="#111827">File Diterima</text>
+    
+    <rect x="16" y="116" width="343" height="60" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <rect x="28" y="126" width="40" height="40" rx="4" fill="#E5E7EB" />
+    <text x="80" y="146" font-size="14" fill="#4B5563" font-weight="600">Document_Proposal.pdf</text>
+    <text x="80" y="164" font-size="12" fill="#6B7280">2.4 MB</text>
+    
+    <rect x="16" y="186" width="343" height="60" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <rect x="28" y="196" width="40" height="40" rx="4" fill="#E5E7EB" />
+    <text x="80" y="216" font-size="14" fill="#4B5563" font-weight="600">Video_Presentasi.mp4</text>
+    <text x="80" y="234" font-size="12" fill="#6B7280">150 MB</text>
+    
+    <rect y="728" width="375" height="84" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <circle cx="62" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="187" cy="760" r="10" fill="#00488D" />
+    <circle cx="312" cy="760" r="10" fill="#9CA3AF" />
+    <text x="187" y="790" font-size="12" fill="#00488D" text-anchor="middle">File</text>
+  </g>
+
+  <g transform="translate(850, 0)">
+    <rect width="375" height="812" fill="#F3F4F6" />
+    <rect width="375" height="44" fill="#E5E7EB" />
+    <rect y="44" width="375" height="56" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="16" y="80" font-size="20" font-weight="600" fill="#111827">Riwayat Transfer</text>
+    
+    <rect x="16" y="116" width="343" height="70" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="32" y="142" font-size="14" fill="#4B5563" font-weight="600">Ke: Desktop-PC</text>
+    <text x="32" y="160" font-size="12" fill="#6B7280">design_assets.zip (45 MB)</text>
+    <text x="340" y="150" font-size="12" fill="#10B981" text-anchor="end">Sukses</text>
+    
+    <rect x="16" y="196" width="343" height="70" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="32" y="222" font-size="14" fill="#4B5563" font-weight="600">Dari: iPhone Sarah</text>
+    <text x="32" y="240" font-size="12" fill="#6B7280">IMG_0912.jpg (3 MB)</text>
+    <text x="340" y="230" font-size="12" fill="#EF4444" text-anchor="end">Ditolak</text>
+    
+    <rect y="728" width="375" height="84" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <circle cx="62" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="187" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="312" cy="760" r="10" fill="#00488D" />
+    <text x="312" y="790" font-size="12" fill="#00488D" text-anchor="middle">Riwayat</text>
+  </g>
+
+  <g transform="translate(1275, 0)">
+    <rect width="375" height="812" fill="#F3F4F6" />
+    <rect width="375" height="44" fill="#E5E7EB" />
+    <rect y="44" width="375" height="56" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="16" y="80" font-size="20" font-weight="600" fill="#111827">Pengaturan</text>
+    
+    <rect x="16" y="116" width="343" height="200" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <text x="32" y="146" font-size="16" font-weight="600" fill="#374151">Nama Perangkat</text>
+    <rect x="32" y="160" width="311" height="40" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" />
+    <text x="44" y="185" font-size="14" fill="#4B5563">Galaxy S23 Ultra</text>
+    
+    <text x="32" y="226" font-size="16" font-weight="600" fill="#374151">Auto-Accept</text>
+    <text x="32" y="244" font-size="12" fill="#6B7280">Terima otomatis</text>
+    <rect x="290" y="226" width="40" height="24" rx="12" fill="#E5E7EB" />
+    <circle cx="302" cy="238" r="10" fill="#FFFFFF" />
+    
+    <line x1="16" y1="270" x2="359" y2="270" stroke="#E5E7EB" stroke-width="1" />
+    <text x="32" y="296" font-size="16" font-weight="600" fill="#374151">Penyimpanan</text>
+    <text x="32" y="314" font-size="12" fill="#6B7280">/Download</text>
+    
+    <rect y="728" width="375" height="84" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1" />
+    <circle cx="62" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="187" cy="760" r="10" fill="#9CA3AF" />
+    <circle cx="312" cy="760" r="10" fill="#00488D" />
+    <text x="312" y="790" font-size="12" fill="#00488D" text-anchor="middle">Pengaturan</text>
+  </g>
+
+</svg>

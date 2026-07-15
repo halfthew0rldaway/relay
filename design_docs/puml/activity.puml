@@ -1,0 +1,35 @@
+@startuml
+|Pengirim (Sender)|
+start
+:Buka Aplikasi Relay;
+:Pindai Perangkat di Jaringan (mDNS);
+:Pilih Perangkat Tujuan;
+:Pilih File yang akan dikirim;
+:Kirim Request (Metadata File);
+
+|Penerima (Receiver)|
+:Menerima HTTP POST Request;
+:Cek Auto-accept / Tampilkan Dialog Konfirmasi;
+
+if (Status Persetujuan) then (Diterima / Auto-accept)
+  :Kirim Response 200 OK;
+  
+  |Pengirim (Sender)|
+  :Mulai Streaming Byte File;
+  
+  |Penerima (Receiver)|
+  :Terima Data Stream & Tulis ke Disk;
+  :Perbarui Progres Transfer;
+  
+  |Pengirim (Sender)|
+  :File Selesai Dikirim;
+else (Ditolak)
+  |Penerima (Receiver)|
+  :Kirim Response 403 Rejected;
+  
+  |Pengirim (Sender)|
+  :Transfer Dibatalkan;
+endif
+
+stop
+@enduml

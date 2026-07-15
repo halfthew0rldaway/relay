@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2980 900" width="2980" height="900" style="background-color: #F3F4F6; font-family: 'Inter', system-ui, sans-serif;">
+  
+  <!-- WEB VIEW 1 -->
+  <rect width="1440" height="900" fill="#F3F4F6" />
+  <rect width="250" height="900" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="24" y="40" font-size="24" font-weight="900" fill="#111827">Relay Web</text>
+  
+  <rect x="12" y="70" width="226" height="40" rx="6" fill="#E5E7EB" />
+  <text x="24" y="95" font-size="18" font-weight="900" fill="#374151">Beranda</text>
+  <text x="24" y="145" font-size="18" font-weight="900" fill="#6B7280">Riwayat</text>
+  <text x="24" y="195" font-size="18" font-weight="900" fill="#6B7280">Pengaturan</text>
+
+  <text x="280" y="50" font-size="24" font-weight="900" fill="#111827">Dashboard</text>
+  <rect x="280" y="80" width="750" height="200" rx="12" stroke="#D1D5DB" stroke-width="1" fill="#F9FAFB" />
+  <text x="655" y="170" font-size="18" font-weight="900" fill="#374151" text-anchor="middle">Drag and Drop File Kesini</text>
+  <text x="655" y="190" font-size="14" fill="#4B5563" text-anchor="middle">atau klik untuk memilih file</text>
+
+  <text x="280" y="330" font-size="18" font-weight="900" fill="#374151">Perangkat Ditemukan</text>
+  
+  <rect x="280" y="350" width="360" height="100" rx="8" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <circle cx="330" cy="400" r="24" fill="#E5E7EB" />
+  <text x="370" y="390" font-size="18" font-weight="900" fill="#374151">Galaxy Phone</text>
+  <text x="370" y="410" font-size="14" fill="#4B5563">192.168.1.5</text>
+  <rect x="540" y="380" width="80" height="36" fill="#00488D" rx="6" />
+  <text x="580" y="403" fill="#FFFFFF" font-size="14" font-weight="900" text-anchor="middle">Kirim</text>
+
+  <rect x="670" y="350" width="360" height="100" rx="8" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <circle cx="720" cy="400" r="24" fill="#E5E7EB" />
+  <text x="760" y="390" font-size="18" font-weight="900" fill="#374151">MacBook Pro</text>
+  <text x="760" y="410" font-size="14" fill="#4B5563">192.168.1.10</text>
+  <rect x="930" y="380" width="80" height="36" fill="#00488D" rx="6" />
+  <text x="970" y="403" fill="#FFFFFF" font-size="14" font-weight="900" text-anchor="middle">Kirim</text>
+
+  <rect x="1080" y="0" width="360" height="900" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="1100" y="40" font-size="18" font-weight="900" fill="#374151">Riwayat Terakhir</text>
+  <line x1="1080" y1="60" x2="1440" y2="60" stroke="#D1D5DB" stroke-width="1" />
+  <rect x="1100" y="80" width="320" height="60" rx="6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1" />
+  <text x="1115" y="105" font-size="14" fill="#4B5563" font-weight="900">Laporan.pdf</text>
+  <text x="1115" y="125" font-size="12" fill="#6B7280">Ke: Galaxy Phone</text>
+
+  <!-- WEB VIEW 2 -->
+  <rect x="1540" y="0" width="1440" height="900" fill="#F3F4F6" />
+  <rect x="1540" y="0" width="250" height="900" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="1564" y="40" font-size="24" font-weight="900" fill="#111827">Relay Web</text>
+  <text x="1564" y="95" font-size="18" font-weight="900" fill="#6B7280">Beranda</text>
+  <text x="1564" y="145" font-size="18" font-weight="900" fill="#6B7280">Riwayat</text>
+  <rect x="1552" y="170" width="226" height="40" rx="6" fill="#E5E7EB" />
+  <text x="1564" y="195" font-size="18" font-weight="900" fill="#374151">Pengaturan</text>
+
+  <text x="1820" y="50" font-size="24" font-weight="900" fill="#111827">Pengaturan Sistem</text>
+  <rect x="1820" y="80" width="750" height="300" rx="8" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  
+  <text x="1850" y="120" font-size="18" font-weight="900" fill="#374151">Identitas Perangkat</text>
+  <rect x="1850" y="140" width="400" height="40" rx="6" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="1865" y="165" font-size="14" fill="#4B5563">PC Desktop Utama</text>
+
+  <text x="1850" y="210" font-size="18" font-weight="900" fill="#374151">Direktori Unduhan</text>
+  <rect x="1850" y="230" width="400" height="40" rx="6" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="1865" y="255" font-size="14" fill="#4B5563">/Downloads/Relay</text>
+  
+  <text x="1850" y="310" font-size="18" font-weight="900" fill="#374151">Terima Otomatis</text>
+  <rect x="2240" y="295" width="48" height="24" rx="12" fill="#E5E7EB" />
+  <circle cx="2252" cy="307" r="10" fill="#FFFFFF" />
+
+  <rect x="1540" y="0" width="1440" height="900" fill="#000000" fill-opacity="0.3" />
+  <rect x="2060" y="300" width="400" height="250" rx="12" stroke="#D1D5DB" stroke-width="1" fill="#FFFFFF" />
+  <text x="2260" y="340" font-size="24" font-weight="900" fill="#111827" text-anchor="middle">Terima File?</text>
+  <text x="2260" y="370" font-size="14" fill="#4B5563" text-anchor="middle">MacBook Pro ingin mengirim:</text>
+  
+  <rect x="2100" y="400" width="320" height="50" rx="6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1" />
+  <text x="2120" y="430" font-size="14" fill="#4B5563" font-weight="900">Video_Render.mp4 (450 MB)</text>
+  
+  <rect x="2100" y="480" width="150" height="40" rx="6" fill="#E5E7EB" />
+  <text x="2175" y="505" font-size="14" fill="#4B5563" font-weight="900" text-anchor="middle">Tolak</text>
+  <rect x="2270" y="480" width="150" height="40" rx="6" fill="#00488D" />
+  <text x="2345" y="505" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">Terima</text>
+</svg>

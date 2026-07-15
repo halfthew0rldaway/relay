@@ -1,0 +1,51 @@
+@startuml
+' Hide circle icon for classes
+hide circle
+' Avoid displaying methods in entities
+hide empty methods
+
+entity "PinnedDevice" as pinned {
+  * id : String <<PK>>
+  --
+  name : String
+  ipAddress : String
+  port : Integer
+  type : DeviceType (Enum: PHONE, DESKTOP, dll)
+  pinnedAt : Long (Timestamp)
+}
+
+entity "TransferRecord" as history {
+  * id : Long <<PK>> <<AutoIncrement>>
+  --
+  fileName : String
+  sizeBytes : Long
+  direction : TransferDirection (Enum: SENT, RECEIVED)
+  status : TransferStatus (Enum: SUCCESS, FAILED, CANCELLED)
+  peerName : String
+  timestampMs : Long (Timestamp)
+}
+
+entity "Settings" as settings {
+  * id : Integer <<PK>> (Singleton)
+  --
+  deviceName : String
+  downloadPath : String
+  autoAccept : Boolean
+}
+
+note top of pinned
+  Disimpan melalui Room SQLite (Android) 
+  dan pinned.json (Web)
+end note
+
+note top of history
+  Disimpan melalui Room SQLite (Android)
+  dan history.json (Web)
+end note
+
+note bottom of settings
+  Preferensi perangkat tersimpan 
+  secara lokal
+end note
+
+@enduml
